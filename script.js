@@ -91,6 +91,22 @@
     node.textContent = new Date().getFullYear();
   });
 
+  function showFormStatus(message) {
+    if (formStatus) {
+      formStatus.textContent = message;
+    }
+  }
+
+  function handleSuccessfulSubmission() {
+    var searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.get('success') === '1') {
+      showFormStatus('Request sent successfully. Thank you!');
+      window.history.replaceState(null, '', window.location.pathname);
+    }
+  }
+
+  handleSuccessfulSubmission();
+
   var dynamicTextNodes = document.querySelectorAll('.dynamic-text');
   if (dynamicTextNodes.length) {
     var expertiseRoles = [
@@ -276,6 +292,7 @@
         var requesterName = String(contactForm.querySelector('[name="name"]').value || '').trim();
         subjectInput.value = requesterName ? 'Contact request from ' + requesterName : 'Contact request';
       }
+      showFormStatus('Sending request…');
     });
   }
 })();
