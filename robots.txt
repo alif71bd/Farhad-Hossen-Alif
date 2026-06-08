@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: http://alif.aio.bd/sitemap.xml
