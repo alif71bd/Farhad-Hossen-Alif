@@ -49,8 +49,21 @@
     header.classList.toggle('scrolled', window.scrollY > 8);
   }
 
+  var scrollHint = document.querySelector('.scroll-hint');
+
+  function hideScrollHint() {
+    if (!scrollHint) return;
+    if (window.scrollY > 8) {
+      scrollHint.classList.add('scroll-hint-hidden');
+    }
+  }
+
   updateHeader();
-  window.addEventListener('scroll', updateHeader, { passive: true });
+  hideScrollHint();
+  window.addEventListener('scroll', function () {
+    updateHeader();
+    hideScrollHint();
+  }, { passive: true });
 
   yearNodes.forEach(function (node) {
     node.textContent = new Date().getFullYear();
@@ -81,24 +94,139 @@
     }, 3000);
   }
 
+  var revealObserver = null;
   var revealNodes = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
-    var observer = new IntersectionObserver(function (entries) {
+    revealObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
+          revealObserver.unobserve(entry.target);
         }
       });
     }, { threshold: 0.12 });
 
     revealNodes.forEach(function (node) {
-      observer.observe(node);
+      revealObserver.observe(node);
     });
   } else {
     revealNodes.forEach(function (node) {
       node.classList.add('is-visible');
     });
+  }
+
+  function observeRevealNode(node) {
+    if (!node) return;
+    if (revealObserver) {
+      revealObserver.observe(node);
+    } else {
+      node.classList.add('is-visible');
+    }
+  }
+
+  initGallery();
+
+  function initGallery() {
+    var galleryGrid = document.getElementById('galleryGrid');
+    var galleryOverlay = document.getElementById('galleryLightbox');
+    var galleryImage = galleryOverlay ? galleryOverlay.querySelector('.lightbox-content img') : null;
+    var galleryClose = galleryOverlay ? galleryOverlay.querySelector('.lightbox-close') : null;
+
+    if (!galleryGrid) return;
+
+    galleryGrid.innerHTML = '<p class="gallery-loading">Loading gallery...</p>';
+
+    function checkImageExists(src) {
+      return new Promise(function (resolve) {
+        var img = new Image();
+        img.onload = function () { resolve(src); };
+        img.onerror = function () { resolve(null); };
+        img.src = src;
+      });
+    }
+
+    function loadGalleryManifest() {
+      return fetch('img/gallery.json').then(function (response) {
+        if (!response.ok) {
+          throw new Error('Gallery manifest not found');
+        }
+        return response.json();
+      });
+    }
+
+    function scanGalleryImages() {
+      var checks = [];
+      var extensions = ['jpg', 'jpeg', 'png'];
+      var maxImages = 12;
+
+      for (var i = 1; i <= maxImages; i += 1) {
+        extensions.forEach(function (ext) {
+          checks.push(checkImageExists('img/repair-work-' + i + '.' + ext));
+        });
+      }
+
+      Promise.all(checks).then(function (results) {
+        var images = results.filter(function (src) { return src; });
+        renderGallery(images);
+      });
+    }
+
+    function renderGallery(images) {
+      galleryGrid.innerHTML = '';
+      if (!images.length) {
+        galleryGrid.innerHTML = '<p class="gallery-empty">No images found. Upload images to the <code>img/</code> folder named like <code>repair-work-1.jpg</code>.</p>';
+        return;
+      }
+
+      images.forEach(function (src, index) {
+        var figure = document.createElement('figure');
+        figure.className = 'gallery-item reveal';
+
+        var img = document.createElement('img');
+        img.src = src;
+        img.alt = 'Repair gallery image ' + (index + 1);
+
+        figure.appendChild(img);
+        figure.addEventListener('click', function () {
+          if (!galleryOverlay || !galleryImage) return;
+          galleryImage.src = src;
+          galleryImage.alt = img.alt;
+          galleryOverlay.classList.remove('hidden');
+          galleryOverlay.setAttribute('aria-hidden', 'false');
+        });
+
+        galleryGrid.appendChild(figure);
+        observeRevealNode(figure);
+      });
+    }
+
+    if (galleryClose) {
+      galleryClose.addEventListener('click', function () {
+        if (!galleryOverlay || !galleryImage) return;
+        galleryOverlay.classList.add('hidden');
+        galleryOverlay.setAttribute('aria-hidden', 'true');
+        galleryImage.src = '';
+        galleryImage.alt = '';
+      });
+    }
+
+    if (galleryOverlay) {
+      galleryOverlay.addEventListener('click', function (event) {
+        if (event.target === galleryOverlay) {
+          galleryClose && galleryClose.click();
+        }
+      });
+    }
+
+    loadGalleryManifest()
+      .then(function (images) {
+        if (Array.isArray(images) && images.length) {
+          renderGallery(images);
+        } else {
+          scanGalleryImages();
+        }
+      })
+      .catch(scanGalleryImages);
   }
 
   function scrollTestimonials(direction) {

@@ -77,33 +77,21 @@
     </section>
 
     <section class="section gallery-section" aria-label="Repair gallery">
-      <div class="container gallery-grid">
-        <figure class="gallery-item tall reveal">
-          <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80" alt="Mobile repair tools and device on a work desk">
-          <figcaption>Workspace setup</figcaption>
-        </figure>
-        <figure class="gallery-item reveal reveal-delay-1">
-          <img src="https://images.unsplash.com/photo-1592890288564-76628a30a657?auto=format&fit=crop&w=900&q=80" alt="Smartphone display close up after repair">
-          <figcaption>Display inspection</figcaption>
-        </figure>
-        <figure class="gallery-item wide reveal reveal-delay-2">
-          <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&w=1100&q=80" alt="Smartphone with diagnostics on a desk">
-          <figcaption>Diagnostics stage</figcaption>
-        </figure>
-        <figure class="gallery-item reveal">
-          <img src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=900&q=80" alt="Repair technician working with small electronic components">
-          <figcaption>Component repair</figcaption>
-        </figure>
-        <figure class="gallery-item reveal reveal-delay-1">
-          <img src="https://images.unsplash.com/photo-1605236453806-6ff36851218e?auto=format&fit=crop&w=900&q=80" alt="Phone battery and internal parts service">
-          <figcaption>Battery service</figcaption>
-        </figure>
-        <figure class="gallery-item tall reveal reveal-delay-2">
-          <img src="https://images.unsplash.com/photo-1581092335878-2d9ff86ca2bf?auto=format&fit=crop&w=900&q=80" alt="Electronics repair bench with precision tools">
-          <figcaption>Precision tools</figcaption>
-        </figure>
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">Repair Gallery</span>
+          <h2 id="image-title">Images from recent repair work.</h2>
+        </div>
+        <div id="galleryGrid" class="gallery-grid reveal" aria-live="polite"></div>
       </div>
     </section>
+
+    <div class="lightbox-overlay hidden" id="galleryLightbox" aria-hidden="true">
+      <button class="lightbox-close" type="button" aria-label="Close image">×</button>
+      <div class="lightbox-content">
+        <img src="" alt="">
+      </div>
+    </div>
   </main>
 
   <a class="whatsapp-fab" href="http://wa.me/+8801568059521" target="_blank" rel="noopener" aria-label="Message Farhad Hossen Alif on WhatsApp">
