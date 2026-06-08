@@ -269,22 +269,13 @@
     });
   }
 
-  if (contactForm && formStatus) {
-    contactForm.addEventListener('submit', function (event) {
-      event.preventDefault();
-      var data = new FormData(contactForm);
-      var name = String(data.get('name') || '').trim();
-      var email = String(data.get('email') || '').trim();
-      var device = String(data.get('device') || '').trim();
-      var issue = String(data.get('issue') || '').trim();
-
-      if (!name || !email || !device || !issue) {
-        formStatus.textContent = 'Please complete all fields before submitting.';
-        return;
+  if (contactForm) {
+    contactForm.addEventListener('submit', function () {
+      var subjectInput = document.getElementById('emailSubject');
+      if (subjectInput) {
+        var requesterName = String(contactForm.querySelector('[name="name"]').value || '').trim();
+        subjectInput.value = requesterName ? 'Contact request from ' + requesterName : 'Contact request';
       }
-
-      formStatus.textContent = 'Thanks, ' + name + '. Your request is ready to send.';
-      contactForm.reset();
     });
   }
 })();

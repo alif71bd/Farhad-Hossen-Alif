@@ -1251,6 +1251,36 @@ h3 {
   padding: 44px 0 28px;
 }
 
+.footer-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-links-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.footer-links-list li a,
+.footer-contact > a,
+.footer-contact > span {
+  color: var(--muted);
+  transition: color 180ms ease;
+}
+
+.footer-links-list li a:hover,
+.footer-contact > a:hover {
+  color: var(--primary-strong);
+}
+
+.footer-contact > span {
+  display: inline-block;
+}
+
 .footer-brand {
   margin-bottom: 14px;
 }
@@ -1267,7 +1297,6 @@ h3 {
 
 .site-footer a,
 .site-footer span {
-  display: block;
   margin-bottom: 8px;
   color: var(--muted);
   transition: color 180ms ease;
@@ -1326,49 +1355,33 @@ h3 {
   color: var(--muted);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  font-size: 0.95rem;
-}
-
-.footer-bottom .footer-credit {
-  color: var(--muted);
-}
-
-.footer-bottom .footer-credit a {
-  color: var(--primary-strong);
-  font-weight: 700;
-  text-decoration: none;
-}
-
-@media (max-width: 700px) {
-  .footer-grid {
-    grid-template-columns: 1fr;
-  }
-  .footer-bottom {
-    /* keep footer credits on one line to avoid broken two-line credit */
-    flex-direction: row;
-    align-items: center;
-    gap: 8px;
+    justify-content: center;
+    gap: 12px;
+    font-size: 0.95rem;
     flex-wrap: wrap;
   }
-}
 
-.footer-credit {
-  white-space: nowrap;
-  color: var(--muted);
-}
+  .footer-credit {
+    color: var(--muted);
+  }
 
-.footer-credit a {
-  color: var(--primary-strong);
-  font-weight: 700;
-  text-decoration: none;
-}
+  .footer-credit a {
+    color: var(--primary-strong);
+    font-weight: 700;
+    text-decoration: none;
+  }
 
-.reveal {
-  opacity: 0;
-  transform: translateY(26px);
-  transition: opacity 650ms ease, transform 650ms ease;
+  .footer-dev {
+    white-space: nowrap;
+  }
+
+  @media (max-width: 700px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+    .footer-bottom {
+      justify-content: center;
+    }
 }
 
 .reveal.is-visible {
