@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,8 +23,18 @@
   <link rel="stylesheet" href="styles.css">
   <script>
     (function () {
-      var savedTheme = localStorage.getItem('alif-theme');
-      document.documentElement.setAttribute('data-theme', savedTheme || 'dark');
+      var savedTheme = localStorage.getItem('alif-theme-meta');
+      try {
+        var themeData = savedTheme ? JSON.parse(savedTheme) : null;
+        var theme = themeData && themeData.theme && themeData.expiresAt > Date.now() ? themeData.theme : 'light';
+        if (themeData && themeData.expiresAt <= Date.now()) {
+          localStorage.removeItem('alif-theme-meta');
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (error) {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.removeItem('alif-theme-meta');
+      }
     })();
   </script>
 </head>

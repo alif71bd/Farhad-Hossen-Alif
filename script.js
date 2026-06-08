@@ -11,20 +11,42 @@
   var prevTestimonial = document.querySelector('[data-testimonial-prev]');
   var nextTestimonial = document.querySelector('[data-testimonial-next]');
 
-  function setTheme(theme) {
+  function getStoredTheme() {
+    var stored = localStorage.getItem('alif-theme-meta');
+    if (!stored) return null;
+    try {
+      var data = JSON.parse(stored);
+      if (data && data.theme && data.expiresAt && Date.now() < data.expiresAt) {
+        return data.theme;
+      }
+      localStorage.removeItem('alif-theme-meta');
+    } catch (error) {
+      localStorage.removeItem('alif-theme-meta');
+    }
+    return null;
+  }
+
+  function saveTheme(theme) {
+    var expiresAt = Date.now() + 7 * 24 * 60 * 60 * 1000;
+    localStorage.setItem('alif-theme-meta', JSON.stringify({ theme: theme, expiresAt: expiresAt }));
+  }
+
+  function setTheme(theme, persist) {
     root.setAttribute('data-theme', theme);
-    localStorage.setItem('alif-theme', theme);
+    if (persist) {
+      saveTheme(theme);
+    }
     if (themeToggle) {
       themeToggle.setAttribute('aria-pressed', String(theme === 'dark'));
     }
   }
 
-  setTheme(localStorage.getItem('alif-theme') || 'dark');
+  setTheme(getStoredTheme() || 'light');
 
   if (themeToggle) {
     themeToggle.addEventListener('click', function () {
       var nextTheme = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      setTheme(nextTheme);
+      setTheme(nextTheme, true);
     });
   }
 
