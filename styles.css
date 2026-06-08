@@ -1324,6 +1324,45 @@ h3 {
   padding: 18px 0 28px;
   border-top: 1px solid var(--border);
   color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.95rem;
+}
+
+.footer-bottom .footer-credit {
+  color: var(--muted);
+}
+
+.footer-bottom .footer-credit a {
+  color: var(--primary-strong);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media (max-width: 700px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+  .footer-bottom {
+    /* keep footer credits on one line to avoid broken two-line credit */
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+}
+
+.footer-credit {
+  white-space: nowrap;
+  color: var(--muted);
+}
+
+.footer-credit a {
+  color: var(--primary-strong);
+  font-weight: 700;
+  text-decoration: none;
 }
 
 .reveal {
