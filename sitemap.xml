@@ -6,32 +6,32 @@
     <priority>1.00</priority>
   </url>
   <url>
-    <loc>http://alif.aio.bd/gallery.html</loc>
+    <loc>http://alif.aio.bd/gallery</loc>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>http://alif.aio.bd/services.html</loc>
+    <loc>http://alif.aio.bd/services</loc>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>http://alif.aio.bd/pricing.html</loc>
+    <loc>http://alif.aio.bd/pricing</loc>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>http://alif.aio.bd/contact.html</loc>
+    <loc>http://alif.aio.bd/contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://alif.aio.bd/privacy.html</loc>
+    <loc>http://alif.aio.bd/privacy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.30</priority>
   </url>
   <url>
-    <loc>http://alif.aio.bd/terms.html</loc>
+    <loc>http://alif.aio.bd/terms</loc>
     <changefreq>yearly</changefreq>
     <priority>0.30</priority>
   </url>
